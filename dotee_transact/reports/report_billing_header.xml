@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="external_layout_billing_header_inherit_cr">
+    
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <div class="header">
+        </div>
+        
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+          <t t-raw="0"/>
+        </div>
+        <div class="footer">
+             
+            <style>
+                .footer{
+                    font-size:16px;
+                }
+            </style>
+            <span t-set="d_start_delta" t-value="relativedelta(months=-1)"/>
+            <span t-set="d_delta" t-value="relativedelta(months=o.period -1)"/>
+
+<!--                         <span t-set="d_dateorder" t-value="datetime.datetime.strptime(o.invoice_date,'%Y-%m-%d %H:%M:%S')"/> -->
+
+<!--            <span t-set="start_paydate" t-value="o.invoice_date + d_start_delta"/>-->
+<!--            <span t-set="d_paydate" t-value="o.invoice_date + d_delta"/>-->
+            
+
+            <div class="clearfix"  style="padding-bottom:140px">
+                <div id="total" class="row">
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} offset-4">
+                        <table class="table table-borderless text-dark table-sm;page-break-inside: avoid;">
+                            <tr class="my-0 py-0">
+                                <!-- <td><strong>Current Charges</strong></td> -->
+                                <td class="text-right my-0 py-0">
+                                    <span t-field="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <!-- <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                <tr>
+                                    <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                        <td><span t-esc="amount_by_group[0]"/></td>
+                                        <td class="text-right">
+                                            <span t-esc="amount_by_group[3]"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <span t-esc="amount_by_group[0]"/>
+                                             <span>&amp;nbsp;<span>on</span> 
+                                                <t t-esc="amount_by_group[4]"/>
+                                             </span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="amount_by_group[3]"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t> -->
+                            <tr class="my-0 py-0">
+                                <td class="text-right my-0 py-0">
+                                    <span t-field="o.dotee_total_overdue"/>
+                                </td> 
+                            </tr>
+                            <tr class="my-0 py-0">
+                                <!-- <td><strong>Total</strong></td> -->
+                                <td class="text-right my-0 py-0">
+                                    <span t-field="o.x_studio_accrued_amount_due"/>
+                                </td> 
+                            </tr>
+                        </table><!-- \End table --> 
+                        <div class="col-7" style="position:absolute;right:-390px">
+<!--                             <span t-esc="'{:%b %Y}'.format(o.invoice_date)" />-->
+<!--                            <span t-esc="start_paydate.strftime('%b %Y')" />-->
+                            <span t-field="o.x_studio_print_period"/>
+<!--                            <span t-esc="d_paydate.strftime('%b %Y')"/>-->
+                        </div>
+<!--                                     <div class="col-6 offset-9">
+                            <div class="text-right">
+                                <span t-field="o.x_studio_total_overdue"/>
+                            </div>
+                        </div> -->
+                    </div><!-- \End .col-4 -->
+                </div><!-- \End .row -->
+            </div><!-- \End .clearfix -->
+            <t t-foreach="range(2)" t-as="l">
+                <div class="row pl-5" style="padding-top:200px">
+                    <div class="col-3 pl-3 text-left" style="line-height:15px">
+                        <span t-field="o.partner_id"/><br/>
+                        <t t-if="(l) == 1">
+                            <span class="text-left" t-field="o.partner_id.street"/>
+                        </t>
+                    </div>
+                    <div class="col-3 px-0">
+                        <span class="text-left" t-field="o.partner_id.x_customer_payment_id"/>
+                    </div>
+                    <div class="col-3 px-0 text-right">
+                        <span t-field="o.x_studio_accrued_amount_due"/>
+                    </div>
+                    <div class="col-3 px-0 text-right">
+<!--                         <span t-esc="'{:%b %Y}'.format(o.invoice_date)" />-->
+<!--                        <span t-esc="start_paydate.strftime('%b %Y')" />-->
+                        <span t-field="o.x_studio_print_period"/>
+<!--                        <span t-esc="d_paydate.strftime('%b %Y')"/>-->
+<!--                         <span t-esc="datetime.datetime.strptime('08/24/2020', '%m/$d/%Y')" /> -->
+                        <t t-foreach="datefinder.find_dates('This invoice covers the following period: 08/24/2020 - 08/24/2020')" t-as="match">
+                            <span>Date: </span>
+                            <span class="text-right" t-esc="match"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>

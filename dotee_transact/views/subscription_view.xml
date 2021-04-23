@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_subscription_form_extends" model="ir.ui.view">
+			<field name="name">sale.subscription.form.view</field>
+			<field name="model">sale.subscription</field>
+			<field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="period" string="Number of months"/>
+				</xpath>
+                <xpath expr="//form[1]/sheet[1]/div[not(@name)][3]/notebook[1]/page[1]/div[1]/field[@name='recurring_invoice_line_ids']/tree[1]/field[@name='quantity']" position="after">
+					<field name="unit_vacant" string="Vacant"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

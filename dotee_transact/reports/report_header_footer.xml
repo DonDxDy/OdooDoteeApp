@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="external_layout_header_inherit_cr">
+    
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <div class="header">
+            
+            <!-- <div class="background"></div> -->
+          <div class="row">
+            <div class="col-12 d-sm-flex align-items-center justify-content-between mt-4">
+              <h4 class="text-center">LAGOS WASTE MANAGEMENT AUTHORITY</h4>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-4">
+                  <!-- dotee_transact.external_layout_header_inherit_cr -->
+                  <img class="img-fluid img-logo" src="/dotee_transact/static/src/img/side-logo.png" style="width:110px"/>
+              </div>
+              <div class="col-4">
+                  <img class="img-fluid img-logo" src="/dotee_transact/static/src/img/lagos-logo.png" style="width:110px"/>
+                  <br/>
+                  <span>
+                      <address>
+                          3, Otto Road, Ijora Olopa, Lagos<br/>
+                          E-mail: Info@lawma.gov.ng<br/>
+                          Website: www.lawma.gov.ng<br/>
+                      </address>
+                  </span>
+              </div>
+              <div class="col-4">
+                  <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                  <p>
+                      <div t-field="company.partner_id" t-options-widget="'contact'"/>
+                  </p>
+              </div>
+          </div>
+        </div>
+        
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+          <t t-raw="0"/>
+        </div>
+        <div class="footer">
+            <link rel="stylesheet" href="/dotee_transact/static/src/css/report.css"/>
+            <div class="row">
+                <div class="col-8 py-2 px-2" style="font-size:12px">
+                    <span>
+                        This bill is issued by LAWMA on behalf of the Lagos State Goverment by virtue of Section 18 of the Lagos Waste Management Authority Las No. 27. Vol. 40, Laws of Lagos State 2007. Any peson who fails or neglects to pay  the tariff, fees or charges prescribed by the Lagos Waste Management Authority commits an offence and is liable on conviction to a fine or imorisonment.
+                    </span>
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-3">
+              <p>
+                  <span>
+                      <strong>Reference Code:</strong>
+                  </span>
+                  <span t-field="o.ref"/>
+              </p>
+              <p>
+                  <span>
+                      <strong>Property Code:</strong>
+                  </span> 
+                  <!-- <span t-field="o.x_studio_customer_payment_number"/> -->
+              </p>
+            </div>
+            <div class="col-5">
+              <span>
+                <div>Dear Customer</div>
+                <div>Please call LAWMA response lines</div>
+                <div>5577 (free from Glo) or 07080601020</div>
+                <div>or PSP number<span t-field="o.company_id.phone"/></div>
+              </span>
+            </div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-5">
+                    <div class="border border-dark rounded-0 px-1 py-1" style="width:auto; height:100px">
+                      <div class="border border-dark rounded-0" style="width:auto; height:40%;background:#fff">
+                      </div>
+                      <div class="col-12 text-center" style="font-size:10px; line-height:1">
+                        <span>DATE, SIGNATURE and BANK STAMP</span>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-7" style="color:#fa4d4d">
+                    <span>RRR Code:</span>
+                    <!-- <span t-field="o.x_RRR_Code"/> -->
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+<!--                         <t t-call="dotee_transact.external_layout_footer_inherit_cr"/> -->
+
+          <div class="row mb-2 mt-2">
+              <div class="col-12">
+                  <table class="table table-borderless">
+                      <h6 style="font-family:arial black;font-size:15px">PSP COPY</h6>
+                      <thead>
+                          <th><span>Name</span></th>
+                          <th><span>Property Code</span></th>
+                          <th class="border-left border-dark"><span>Company Account Code</span></th>
+                          <th class="border-left border-dark"><span>Property Class</span></th>
+                          <th class="border-left border-dark"><span>Amount Due</span></th>
+                          <th class="border-left border-dark"><span>Invoice Month</span></th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td/>
+                              <td/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <!-- .\end Table Section -->
+          <div class="row">
+              <div class="col-9">
+                  <span><strong>Amount Paid</strong></span><br/>
+<!--                         <p class="border border-dark rounded-0" style="width:50%; height: 40px"></p> -->
+                      <div class="col-3 border border-dotted border-dark rounded-0 pl-0 ml-0" style="height:30px">
+                      </div>
+                  <div class="row mt-1">
+                      <div class="col-4">Amount paid in words:</div>
+                      <div class="border-bottom border-dotted border-dark rounded-0 col-8"/>
+                  </div>
+              </div>
+<!--                     <div class="clearfix"></div> -->
+              <div class="col-3">
+                  <div class="border border-dotted border-dark rounded-0" style="width:auto; height:70px"/>
+                  <span style="font-size:6px; line-height:0.5; top:0px">DATE, SIGNATURE and BANK STAMP</span>
+              </div>
+          </div>
+          
+          <!-- Table section -->
+          <div class="row mb-2">
+              <div class="col-12">
+                  <table class="table table-borderless">
+                      <h6 style="font-family:arial black;font-size:15px">LAWMA COPY</h6>
+                      <thead>
+                          <th><span>Name</span></th>
+                          <th><span>Property Code</span></th>
+                          <th class="border-left border-dark"><span>Company Account Code</span></th>
+                          <th class="border-left border-dark"><span>Property Class</span></th>
+                          <th class="border-left border-dark"><span>Amount Due</span></th>
+                          <th class="border-left border-dark"><span>Invoice Month</span></th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td/>
+                              <td/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                              <td class="border-left border-dark"/>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <!-- .\end Table Section -->
+          
+          <div class="row pb-4">
+              <div class="col-7">
+                  <span><strong>Amount Paid</strong></span><br/>
+<!--                         <p class="border rounded-0" style="width:50%; height: 40px"></p> -->
+                  <div class="row">
+                      <div class="col-4 border border-dotted border-dark rounded-0 ml-2 mr-1" style="height:30px">
+                      </div>
+                      <div class="col-7 border border-dark">
+                          <div class="row">
+                              <div class="col-2 pr-0 pl-0" style="font-size:11px">
+                                  PLEASE HELP US UPDATE OUR RECORD
+                              </div>
+                              <div class="col-10">
+                                  <div class="row mt-2">
+                                      <div class="col-auto"><strong>Name</strong></div>
+                                      <div class="col-8 border-bottom border-dark rounded-0"/>
+                                  </div>
+                                  <div class="row mt-2">
+                                      <div class="col-auto"><strong>Address</strong></div>
+                                      <div class="col-8 border-bottom border-dark rounded-0"/>
+                                  </div>
+                                  <div class="row mt-3">
+                                      <div class="col-12 border-bottom border-dark rounded-0"/>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-4">Amount paid in words:</div>
+                      <div class="border-bottom border-dark rounded-0 col-8"/>
+                  </div>
+              </div>
+              <div class="col-2 border border-dark rounded-0 pl-1">
+                  <span>Are you satisfied with our services?</span>
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
+                      <label class="form-check-label" for="defaultCheck1">
+                          YES
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"/>
+                      <label class="form-check-label" for="defaultCheck2">
+                          NO
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"/>
+                      <label class="form-check-label" for="defaultCheck2">
+                          NOT SURE
+                      </label>
+                  </div>
+              </div>
+              <div class="col-3">
+                  <div class="border border-dotted border-dark rounded-0" style="width:auto; height:70px"/>
+                  <span style="font-size:6px; line-height:0.5; top:0px">DATE, SIGNATURE and BANK STAMP</span>
+              </div>
+          </div>
+        </div>
+    </template>
+</odoo>

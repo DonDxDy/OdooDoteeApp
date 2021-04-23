@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="debtor_report_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-if="o.report_type == 'report_2'">
+                            <t t-set="data_report_margin_top" t-value="12"/>
+                            <t t-set="data_report_header_spacing" t-value="9"/>
+                            <t t-set="data_report_dpi" t-value="110"/>
+                        </t>
+                      <div class="container-fluid">
+                        <div class="row">
+                            <div class="col py-2 px-2">
+                                <t t-foreach="streets(data)" t-as="street">
+                                    <table class="table table-borderless table-reports">
+                                        <thead class="border-bottom">
+                                            <th><span>Property Code</span></th>
+                                            <th><span>Customer Information</span></th>
+                                            <th t-if="o.report_type == 'report_1'"><span>Last Payment Date</span></th>
+                                            <th t-if="o.report_type == 'report_1'"><span>Last Payment Amount</span></th>
+                                            <th><span>Computed Charge</span></th>
+                                            <th><span class="text-right">Arrears</span></th>
+                                        </thead>
+                                        <tbody class="invoice_tbody pt-1">
+                                            <tr class="border-bottom border-info mt-2">
+                                                <td  t-att-colspan="4 if o.report_type == 'report_1' else 2">
+                                                    <strong t-esc="street['name']"/>
+                                                </td>
+                                                <td><strong t-esc="sum_arrears_total(data, street['id'], 'x_studio_computed_charge')" t-options="{'widget': 'monetary', 'display_currency': company.currency_id}"/></td>
+                                                <td><strong t-esc="sum_arrears_total(data, street['id'], 'x_studio_arrears')" t-options="{'widget': 'monetary', 'display_currency': company.currency_id}"/></td>
+                                            </tr>
+                                            <tr t-foreach="lines(data, street['id'])" t-as="line">
+                                                <td><span t-esc="line['payment_id']" /></td>
+                                                <td>
+                                                    <span class="font-weight-bold" t-esc="line['name']" /><br />
+                                                    <span class="font-weight-bold" t-esc="line['street']" /><br />
+<!--                                                     <span> Structure:</span><br /> -->
+                                                    <span class="font-weight-bold" t-esc="line['property_structure']" />
+                                                </td>
+                                                <td t-if="o.report_type == 'report_1'"><span t-esc="line['last_payment_date']" /></td>
+                                                <td t-if="o.report_type == 'report_1'"><span t-esc="line['last_payment_amount']" t-options="{'widget': 'monetary', 'display_currency': company.currency_id}"/></td>
+                                                <td><span t-esc="line['computed_charge']" t-options="{'widget': 'monetary', 'display_currency': company.currency_id}"/></td>
+                                                <td><span class="font-weight-bold" t-esc="line['arrears']" t-options="{'widget': 'monetary', 'display_currency': company.currency_id}" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="page-break-before:always;"> </p>
+                                </t>
+                            </div>
+                        </div>
+                      </div>
+                    </div><!-- .\end .page -->
+                </t><!-- .\end web.internal_layout -->
+            </t><!-- .\end t-foreach//docs -->
+        </t><!-- .\end web.html_container -->
+    </template>
+</odoo>

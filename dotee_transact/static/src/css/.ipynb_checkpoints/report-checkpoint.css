@@ -1,0 +1,15 @@
+.page{
+/*     background:#036 */
+    font-size:12px;
+    line-height:1.1;
+}
+.img-logo{
+    width:80px;
+}
+body{
+    background:#f2b23a url('/dotee-transact/static/src/img/body.PNG') repeat;
+    background-position:top left;
+}
+.border-dotted{
+    border-style: dotted !important;
+}

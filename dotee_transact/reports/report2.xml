@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="dotee_billing_report"
+        model="account.move"
+        string="Dotee Billing"
+        report_type="qweb-pdf"
+        name="dotee_transact.dotee_billing_report"
+        file="dotee_transact.dotee_billing_report"
+        attachment_use="True"
+        attachment="(object.state in ('open','paid')) and
+            ('INV'+(object.number or '').replace('/','')+'.pdf')"
+    />
+</odoo>
